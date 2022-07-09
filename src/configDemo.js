@@ -4,6 +4,8 @@ module.exports = {
     clientSecret: 'xxxx',
     inputDir: path.join(__dirname, '..', 'input'),
     outputDir: path.join(__dirname, '..', 'output'),
+    orcResultName: "orcResult.json",
+    ocrCurrentTaskCount: 5,
     outputName: "result.xlsx",
     excelHeaderList: [{
         key: 'companyName',
@@ -17,5 +19,8 @@ module.exports = {
       },{
         key: 'filePath',
         name: "文件路径",
+      },{
+        key: 'error',
+        name: "失败原因",
       }]
 }

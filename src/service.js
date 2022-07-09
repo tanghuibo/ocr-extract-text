@@ -33,7 +33,6 @@ module.exports = {
     return wordList;
   },
   extractData(wordList) {
-    wordList = wordList.filter(item => item != "&");
     const text = wordList.join(" ");
     const result = {};
     result.phoneNumberList = text.match(phoneReg);
@@ -43,8 +42,12 @@ module.exports = {
       const cpBeforeIndex = wordList.findIndex((word) =>
         word.endsWith("公司详情")
       );
-      if (cpBeforeIndex >= 0 && cpBeforeIndex < wordList.length - 1) {
-        result.companyName = wordList[cpBeforeIndex + 1];
+      if (cpBeforeIndex >= 0) {
+        let companyName =  wordList[cpBeforeIndex + 1];
+        if(companyName === "&") {
+          companyName = wordList[cpBeforeIndex + 2];
+        }
+        result.companyName = companyName;
         console.log(
           "获取公司名称失败，备选方案获取到公司名称:" + result.companyName
         );

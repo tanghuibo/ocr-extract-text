@@ -83,6 +83,9 @@ module.exports = {
 
     const contactsMap = extractResultList.reduce((cur, next) => {
       const name = next.companyName;
+      if(name == null || name == '') {
+        return cur;
+      }
       const phoneNumberLength = next.phoneNumberList.length;
       const contacts = next.contacts;
       const data = cur[name];

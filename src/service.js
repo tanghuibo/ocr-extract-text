@@ -33,6 +33,7 @@ module.exports = {
     return wordList;
   },
   extractData(wordList) {
+    wordList = wordList.filter(item => item != "&");
     const text = wordList.join(" ");
     const result = {};
     result.phoneNumberList = text.match(phoneReg);

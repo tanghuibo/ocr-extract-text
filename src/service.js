@@ -38,6 +38,18 @@ module.exports = {
     result.phoneNumberList = text.match(phoneReg);
     result.companyName = text.match(companyReg)?.[0];
 
+    if (result.companyName == null || result.companyName === "") {
+      const cpBeforeIndex = wordList.findIndex((word) =>
+        word.endsWith("公司详情")
+      );
+      if (cpBeforeIndex >= 0 && cpBeforeIndex < wordList.length - 1) {
+        result.companyName = wordList[cpBeforeIndex + 1];
+        console.log(
+          "获取公司名称失败，备选方案获取到公司名称:" + result.companyName
+        );
+      }
+    }
+
     const createTimeIdx = wordList.indexOf("成立时间");
     if (createTimeIdx >= 0) {
       result.contacts = wordList[createTimeIdx + 2];

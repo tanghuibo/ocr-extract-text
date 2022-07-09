@@ -3,7 +3,7 @@ const path = require('path');
 const baiduApi = require('./baiduApi');
 const store = require('./store');
 const base64Utils = require('./base64Utils');
-const config = require('./configDemo');
+const config = require('./config');
 const excelUtils = require('./excelUtils');
 
 
@@ -33,7 +33,7 @@ module.exports = {
 
         const text = wordList.join(' ');
         const result = {};
-        result.phoneNumber = text.match(phoneReg)?.[0];
+        result.phoneNumberList = text.match(phoneReg);
         result.companyName = text.match(companyReg)?.[0];
 
         const createTimeIdx = wordList.indexOf("成立时间");
@@ -47,7 +47,7 @@ module.exports = {
             fs.mkdirSync(config.outputDir);
         }
         const outPath = path.join(config.outputDir, config.outputName);
-        excelUtils.toExcelFile(dataList, config.excelHeaderList,  outPath);
+        excelUtils.toExcelFile(dataList.flatMap(data => data.phoneNumberList.map(phoneNumber => ({...data, phoneNumber}))), config.excelHeaderList,  outPath);
         console.log("文件地址", outPath);
     }
 }

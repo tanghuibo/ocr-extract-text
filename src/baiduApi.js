@@ -1,6 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
-const config = require('./configDemo');
+const config = require('./config');
 
 
 module.exports = {

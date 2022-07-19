@@ -81,8 +81,17 @@ module.exports = {
     if (!fs.existsSync(config.outputDir)) {
       fs.mkdirSync(config.outputDir);
     }
+    const distinctDataList = [];
+    const phoneNumberSet = new Set();
+    for(let data of dataList) {
+      if(phoneNumberSet.has(data.phoneNumber)) {
+        continue;
+      }
+      phoneNumberSet.add(data.phoneNumber);
+      distinctDataList.push(data);
+    }
     const outPath = path.join(config.outputDir, config.outputName);
-    excelUtils.toExcelFile(dataList, config.excelHeaderList, outPath);
+    excelUtils.toExcelFile(distinctDataList, config.excelHeaderList, outPath);
     console.log("文件地址", outPath);
   },
 };
